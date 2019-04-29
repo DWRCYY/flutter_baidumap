@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
 
     <item
-        android:id="@+id/title"
-        android:title="MapView"
+        android:id="@+id/mi_ok"
+        android:title="确定"
         app:showAsAction="ifRoom"
         />
 </menu>

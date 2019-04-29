@@ -31,6 +31,14 @@ class FlutterBaidumap {
     return await _channel.invokeMethod('open');
   }
 
+  static Future<dynamic> chooseLocation([Map<String, dynamic> args]) async {
+    if (args == null) {
+      args = Map();
+    }
+    args['action'] = 'chooseLocation';
+    return await _channel.invokeMethod('open', args);
+  }
+
   static Future<dynamic> getCurrentPosition() async {
     return await _channel.invokeMethod('getCurrentPosition');
   }

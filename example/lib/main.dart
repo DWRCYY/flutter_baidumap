@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_baidumap/flutter_baidumap.dart' deferred as BaidumapPlugin;
+import 'package:flutter_baidumap/flutter_baidumap.dart' as BaidumapPlugin; // deferred
 
 void main() => runApp(MyApp());
 
@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await BaidumapPlugin.loadLibrary();
+    // await BaidumapPlugin.loadLibrary();
 
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -68,13 +68,22 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void openMapView() {
-    BaidumapPlugin.FlutterBaidumap.open();
+  void openMapView() async{
+    try {
+      Map<String, dynamic> args = {
+        'defaultLocation': { 'longitude': 120.179, 'latitude': 'a' },
+        'showDefaultLocation': true
+      };
+      var result = await BaidumapPlugin.FlutterBaidumap.chooseLocation(args);
+      print(result);
+    } catch (e) {
+      print('$e');
+    }
   }
 
   void getCurrentLocation() async {
     var result = await BaidumapPlugin.FlutterBaidumap.getCurrentPosition();
-    print(result);
+    // print(result);
   }
 
 }
