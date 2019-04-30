@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
   void openMapView() async{
     try {
       Map<String, dynamic> args = {
-        'defaultLocation': { 'longitude': 120.179, 'latitude': 'a' },
+        'defaultLocation': { 'longitude': 120.179, 'latitude': 30.256 },
         'showDefaultLocation': true
       };
       var result = await BaidumapPlugin.FlutterBaidumap.chooseLocation(args);

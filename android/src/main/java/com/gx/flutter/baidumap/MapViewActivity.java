@@ -69,6 +69,12 @@ public class MapViewActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mapView.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // return super.onCreateOptionsMenu(menu);
         this.getMenuInflater().inflate(R.menu.menu_map_view, menu);
@@ -86,7 +92,7 @@ public class MapViewActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
         } else if (item.getItemId() == R.id.mi_ok) {
-            this.menuActionHandler.onGetCurrentPosition(this.currentLocation);
+            this.menuActionHandler.onGetCurrentPosition(this.mapView.getMap().getMapStatus().target);
         }
         this.finish();
         return true;
@@ -96,6 +102,7 @@ public class MapViewActivity extends AppCompatActivity
     private void initMap() {
         try {
             String data = this.getIntent().getStringExtra("data");
+            // System.out.println(data);
             if (data != null && data.trim().length() > 0) {
                 Map<String, Object> args = JSONUtils.fromJson(data, Map.class);
                 Object defaultLocation = args.get("defaultLocation");
