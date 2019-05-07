@@ -1,0 +1,29 @@
+PODS:
+  - BaiduMapKit (4.3.0)
+  - Flutter (1.0.0)
+  - flutter_baidumap (0.0.1):
+    - BaiduMapKit (~> 4.3)
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_baidumap (from `.symlinks/plugins/flutter_baidumap/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - BaiduMapKit
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  flutter_baidumap:
+    :path: ".symlinks/plugins/flutter_baidumap/ios"
+
+SPEC CHECKSUMS:
+  BaiduMapKit: 63575d9236b4112c4ff76391df637f2a6dc1ada8
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_baidumap: 4c07cdde9470505884a2b81f29ae57ac4e2db9cc
+
+PODFILE CHECKSUM: c943b384ff0c29db19b59b792ef0921d95300c02
+
+COCOAPODS: 1.6.1
