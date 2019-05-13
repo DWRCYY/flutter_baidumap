@@ -17,6 +17,7 @@ A new Flutter plugin.
   s.dependency 'Flutter'
 
   s.dependency 'BaiduMapKit', '~> 4.3'
+	s.dependency 'BMKLocationKit'
 
   s.ios.deployment_target = '9.0'
 end

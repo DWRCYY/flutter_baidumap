@@ -12,7 +12,7 @@ import flutter_baidumap
     GeneratedPluginRegistrant.register(with: self)
     // return super.application(application, didFinishLaunchingWithOptions: launchOptions)
 	
-	self.getMapManager(key: "o0PdgT1a7922KZgRO7V35GGY5qAb4t13", delegate: self)
+	self.getMapManager(key: "B9qAiw8CRSo43dC34gerkiuDbnylOepP", delegate: self)
 	
 	return true;
   }
@@ -20,7 +20,7 @@ import flutter_baidumap
 	func getMapManager(key: String, delegate: BMKGeneralDelegate) -> Bool {
 		let mapManager = BMKMapManager()
 		let result = mapManager.start(key, generalDelegate: delegate)
-		if (result) {
+		if (!result) {
 			NSLog("manager start failed!")
 		}
 		return result

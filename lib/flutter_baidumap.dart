@@ -59,6 +59,10 @@ class FlutterBaidumap {
     return await _channel.invokeMethod('getCurrentPosition');
   }
 
+  static Future<dynamic> getAddress(Map<String, dynamic> args) async {
+    return await _channel.invokeMethod('getAddress', args);
+  }
+
   static void startLocate() async {
     _channel.invokeMethod('startLocate');
   }

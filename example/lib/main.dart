@@ -83,7 +83,15 @@ class _MyAppState extends State<MyApp> {
 
   void getCurrentLocation() async {
     var result = await BaidumapPlugin.FlutterBaidumap.getCurrentPosition();
-    // print(result);
+    print(result);
+    if (result['status'] == 0) {
+      var data = result["data"];
+      var coord = {
+        'longitude': data['longitude'],
+        'latitude': data['latitude']
+      };
+      result = await BaidumapPlugin.FlutterBaidumap.getAddress(coord);
+    }
   }
 
 }
