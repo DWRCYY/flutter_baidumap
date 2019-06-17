@@ -2,6 +2,7 @@ package com.gx.flutter.baidumap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import org.json.JSONException;
@@ -49,7 +50,8 @@ public class FlutterBaidumapPlugin implements MethodCallHandler, PluginCallbackC
     String method = call.method;
     switch (method) {
       case "getPlatformVersion":
-        result.success("Android " + android.os.Build.VERSION.RELEASE);
+        int SDK_VERSION = Build.VERSION_CODES.CUR_DEVELOPMENT;
+        result.success("Android " + android.os.Build.VERSION.RELEASE + "," + SDK_VERSION);
         break;
       case "open":
       case "chooseLocation":
