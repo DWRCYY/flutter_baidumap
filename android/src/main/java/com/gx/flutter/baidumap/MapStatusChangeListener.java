@@ -1,7 +1,5 @@
 package com.gx.flutter.baidumap;
 
-import android.app.Activity;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 
