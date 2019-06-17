@@ -1,6 +1,24 @@
 import 'dart:async';
-
 import 'package:flutter/services.dart';
+
+class MethodArgument {
+
+  final String action;
+  final Map<String, dynamic> data;
+
+  MethodArgument({
+    this.action,
+    this.data
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'action': this.action,
+      'data': this.data
+    };
+  }
+
+}
 
 class FlutterBaidumap {
   static const MethodChannel _channel = const MethodChannel('flutter_baidumap');
@@ -31,16 +49,18 @@ class FlutterBaidumap {
     return await _channel.invokeMethod('open');
   }
 
-  static Future<dynamic> chooseLocation([Map<String, dynamic> args]) async {
-    if (args == null) {
-      args = Map();
-    }
-    args['action'] = 'chooseLocation';
-    return await _channel.invokeMethod('open', args);
+  static Future<dynamic> chooseLocation(Map<String, dynamic> args) async {
+    var params = MethodArgument(action: 'chooseLocation', data: args);
+
+    return await _channel.invokeMethod('open', params.toMap());
   }
 
   static Future<dynamic> getCurrentPosition() async {
     return await _channel.invokeMethod('getCurrentPosition');
+  }
+
+  static Future<dynamic> getAddress(Map<String, dynamic> args) async {
+    return await _channel.invokeMethod('getAddress', args);
   }
 
   static void startLocate() async {

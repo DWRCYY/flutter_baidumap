@@ -83,7 +83,7 @@ public class FlutterBaidumapPlugin implements MethodCallHandler, PluginCallbackC
     intent.setClass(this.activity, MapViewActivity.class);
     intent.putExtra("title", "地图");
     intent.putExtra("action", action);
-    intent.putExtra("data", JSONUtils.from(call.arguments));
+    intent.putExtra("data", JSONUtils.from(call.argument("data")));
     // this.activity.startActivity(intent);
     this.activity.startActivity(intent);
   }

@@ -19,7 +19,7 @@ public class MapViewMenuActionHandler {
 
     public void onGetCurrentPosition(LatLng latLng) {
         Intent data = new Intent();
-        data.putExtra("longitude", latLng.latitude);
+        data.putExtra("longitude", latLng.longitude);
         data.putExtra("latitude", latLng.latitude);
 
         try {
