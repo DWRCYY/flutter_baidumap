@@ -32,6 +32,11 @@ class FlutterBaidumap {
     return version;
   }
 
+  static Future<dynamic> get deviceInfo async {
+    final dynamic devInfo = await _channel.invokeMapMethod("getDeviceInfo");
+    return devInfo;
+  }
+
   static Future<dynamic> handler(MethodCall call) {
     String method = call.method;
 

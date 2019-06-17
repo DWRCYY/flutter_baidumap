@@ -8,6 +8,7 @@ import android.os.Bundle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,8 +50,11 @@ public class FlutterBaidumapPlugin implements MethodCallHandler, PluginCallbackC
 
     String method = call.method;
     switch (method) {
+      case "getDeviceInfo":
+        result.success(this.getDeviceInfo());
+        break;
       case "getPlatformVersion":
-        int SDK_VERSION = Build.VERSION_CODES.CUR_DEVELOPMENT;
+        int SDK_VERSION = Build.VERSION.SDK_INT;
         result.success("Android " + android.os.Build.VERSION.RELEASE + "," + SDK_VERSION);
         break;
       case "open":
@@ -101,4 +105,22 @@ public class FlutterBaidumapPlugin implements MethodCallHandler, PluginCallbackC
     System.out.println(jsonObject.toString());
     this.channelResult.success(jsonObject.toString());
   }
+
+  private Map<String, Object> getDeviceInfo() {
+    Map<String, Object> info = new HashMap<>();
+    info.put("Android_Version", Build.VERSION.RELEASE);
+    info.put("SDK_VERSION", Build.VERSION.SDK_INT);
+    info.put("BRAND", Build.BRAND);
+    info.put("BOARD", Build.BOARD);
+    info.put("DISPLAY", Build.DISPLAY);
+    info.put("DEVICE", Build.DEVICE);
+    info.put("HARDWARE", Build.HARDWARE);
+    info.put("MODEL", Build.MODEL);
+    info.put("PRODUCT", Build.PRODUCT);
+    info.put("FINGERPRINT", Build.FINGERPRINT);
+    info.put("USER", Build.USER);
+
+    return info;
+  }
+
 }

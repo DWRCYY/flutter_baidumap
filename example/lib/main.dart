@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_baidumap/flutter_baidumap.dart' as BaidumapPlugin; // deferred
@@ -13,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _deviceInfo = "";
 
   @override
   void initState() {
@@ -25,9 +27,12 @@ class _MyAppState extends State<MyApp> {
     // await BaidumapPlugin.loadLibrary();
 
     String platformVersion;
+    dynamic deviceInfo;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await BaidumapPlugin.FlutterBaidumap.platformVersion;
+      deviceInfo = await BaidumapPlugin.FlutterBaidumap.deviceInfo;
+
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -39,6 +44,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
+      _deviceInfo = jsonEncode(deviceInfo);
     });
   }
 
@@ -53,6 +59,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: <Widget>[
               Text('Running on: $_platformVersion\n'),
+              Text('Running on: $_deviceInfo\n'),
               FlatButton(
                 child: Text('open'),
                 onPressed: () { this.openMapView(); },
