@@ -8,6 +8,7 @@ public class SwiftFlutterBaidumapPlugin: NSObject, FlutterPlugin, NavParamsDeleg
 	var methodResult: FlutterResult?
 	
 	var _mapManager: BMKMapManager?
+	var baiduAK: String?
 
 	public static func register(with registrar: FlutterPluginRegistrar) {
 		channel = FlutterMethodChannel(name: "flutter_baidumap", binaryMessenger: registrar.messenger())
@@ -17,40 +18,40 @@ public class SwiftFlutterBaidumapPlugin: NSObject, FlutterPlugin, NavParamsDeleg
 	
 	func registMapManager() {
 		let mainBundle = Bundle.main
-		let baiduAK = mainBundle.object(forInfoDictionaryKey: "Baidu_AK")
-	
+    baiduAK = mainBundle.object(forInfoDictionaryKey: "Baidu_AK") as? String
+		// print(baiduAK as Any)
 		_mapManager = BMKMapManager()
 		// 如果要关注网络及授权验证事件，请设定generalDelegate参数
-		let ret = _mapManager?.start(baiduAK as? String, generalDelegate: self as? BMKGeneralDelegate)
+		let ret = _mapManager?.start(baiduAK, generalDelegate: self as? BMKGeneralDelegate)
 		if ret == false {
 			NSLog("manager start failed!")
 		}
 	}
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-	self.methodResult = result
-	
-	self.registMapManager()
-	
-	switch call.method {
-	case "getPlatformVersion":
-		result("iOS " + UIDevice.current.systemVersion)
-		return
-	case "open":
-		openMapView()
-		result(nil)
-		return
-	case "getCurrentPosition":
-		getCurrentPosition()
-		return
-	case "getAddress":
-		let args = call.arguments as! Dictionary<String, Any>
-		let lng = args["longitude"] as! Double
-		let lat = args["latitude"] as! Double
-		self.getAddress(longitude: lng, latitude: lat)
-	default:
-		result(nil)
-	}
+    self.methodResult = result
+    
+    self.registMapManager()
+    
+    switch call.method {
+    case "getPlatformVersion":
+      result("iOS " + UIDevice.current.systemVersion)
+      return
+    case "open":
+      openMapView()
+      result(nil)
+      return
+    case "getCurrentPosition":
+      getCurrentPosition()
+      return
+    case "getAddress":
+      let args = call.arguments as! Dictionary<String, Any>
+      let lng = args["longitude"] as! Double
+      let lat = args["latitude"] as! Double
+      self.getAddress(longitude: lng, latitude: lat)
+    default:
+      result(nil)
+    }
   }
 
   func openMapView() {
@@ -58,26 +59,22 @@ public class SwiftFlutterBaidumapPlugin: NSObject, FlutterPlugin, NavParamsDeleg
     // UIApplication.shared.delegate?.window.unsafelyUnwrapped?.rootViewController = mapView
     // mapView.show()
 
-	
     let window = UIApplication.shared.delegate?.window.unsafelyUnwrapped
-	print("rootviewctrl: \(window?.rootViewController == nil)")
-
+	  // print("rootviewctrl: \(window?.rootViewController == nil)")
     let mapView = MapViewController()
-	mapView.navParamsDelegate = self
-	// let navigationController = UINavigationController(rootViewController: window!.rootViewController!)
-    // window?.rootViewController = navigationController
-	
-	// navigationController.present(mapView, animated: true, completion: nil)
-	
-	window?.rootViewController?.present(mapView, animated: true, completion: nil)
-	
+    mapView.navParamsDelegate = self
+    // let navigationController = UINavigationController(rootViewController: window!.rootViewController!)
+      // window?.rootViewController = navigationController
+    
+    // navigationController.present(mapView, animated: true, completion: nil)
+    window?.rootViewController?.present(mapView, animated: true, completion: nil)
     // window?.makeKeyAndVisible()
-
   }
 	
 	func getCurrentPosition() {
-		let bm_ak = "B9qAiw8CRSo43dC34gerkiuDbnylOepP"
-		MapManager.checkPermission(key: bm_ak)
+		// let bm_ak = "B9qAiw8CRSo43dC34gerkiuDbnylOepP"
+		// print(baiduAK as Any)
+		MapManager.checkPermission(key: baiduAK!)
 		print(Bundle.main.bundleIdentifier as Any)
 		let _mapManager = MapManager()
 		_mapManager.delegate = self
@@ -92,7 +89,7 @@ public class SwiftFlutterBaidumapPlugin: NSObject, FlutterPlugin, NavParamsDeleg
 			self.methodResult!(rs)
 			return;
 		}
-		print(location as Any)
+		// print(location as Any)
 		let data = [
 			"status": 0,
 			"data": [
