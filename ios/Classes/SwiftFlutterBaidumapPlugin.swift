@@ -7,14 +7,30 @@ public class SwiftFlutterBaidumapPlugin: NSObject, FlutterPlugin, NavParamsDeleg
 	
 	var methodResult: FlutterResult?
 	
-  public static func register(with registrar: FlutterPluginRegistrar) {
-	channel = FlutterMethodChannel(name: "flutter_baidumap", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterBaidumapPlugin()
-	registrar.addMethodCallDelegate(instance, channel: channel!)
-  }
+	var _mapManager: BMKMapManager?
+
+	public static func register(with registrar: FlutterPluginRegistrar) {
+		channel = FlutterMethodChannel(name: "flutter_baidumap", binaryMessenger: registrar.messenger())
+		let instance = SwiftFlutterBaidumapPlugin()
+		registrar.addMethodCallDelegate(instance, channel: channel!)
+	}
+	
+	func registMapManager() {
+		let mainBundle = Bundle.main
+		let baiduAK = mainBundle.object(forInfoDictionaryKey: "Baidu_AK")
+	
+		_mapManager = BMKMapManager()
+		// 如果要关注网络及授权验证事件，请设定generalDelegate参数
+		let ret = _mapManager?.start(baiduAK as? String, generalDelegate: self as? BMKGeneralDelegate)
+		if ret == false {
+			NSLog("manager start failed!")
+		}
+	}
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 	self.methodResult = result
+	
+	self.registMapManager()
 	
 	switch call.method {
 	case "getPlatformVersion":
